@@ -1,0 +1,24 @@
+@import "./colors.scss";
+
+@import "./mixins.scss";
+
+@import "./antdesignedits.scss";
+
+@import "./general.scss";
+
+@import "../components/theme/outerpage/outerpage.scss";
+@import "../components/theme/textinput/textinput.scss";
+@import "../components/theme/passowrdinput/passowrdinput.scss";
+
+@import "../components/dashboard/nav/nav.scss";
+@import "../components/dashboard/sidebar/sidebar.scss";
+
+
+@import "../pages/signin/signin.scss";
+@import "../pages/signup/signup.scss";
+
+@import "../pages/dashboard/dashboard.scss";
+@import "../pages/dashboard/accounts/accounts.scss";
+@import "../pages/dashboard/settings/settings.scss";
+@import "../pages/dashboard/transactions/transactions.scss";
+

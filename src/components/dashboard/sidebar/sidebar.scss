@@ -1,0 +1,63 @@
+.sidebar {
+  width: 16.8rem;
+  background: $black;
+  height: 100%;
+  position: fixed;
+  // padding: 1.8rem;
+  padding: 2.5rem 2rem;
+  box-sizing: border-box;
+  transition: width 0.2s ease-in-out;
+  z-index: 1;
+
+  @include mobile-portrait() {
+    display: none;
+
+    &.showSideBar {
+      display: block;
+    }
+  }
+
+  .top-section {
+    margin-bottom: 2rem;
+  }
+
+  .menulist-holder {
+    height: 80%;
+
+    ul {
+      padding-left: 0;
+      list-style: none;
+      overflow-y: auto;
+      height: 100%;
+
+      li {
+        margin-bottom: 1.87rem;
+      }
+
+      .menuchild {
+        cursor: pointer;
+
+        .menu-value {
+          font-weight: 400;
+          font-size: 22px;
+          line-height: 35px;
+          opacity: 0.5;
+          color: $white;
+          transition: opacity 0.2s ease-in;
+        }
+
+        .anticon {
+          padding-right: 0.8rem;
+          font-size: 16px;
+        }
+
+        &.active,
+        &:hover {
+          .menu-value {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+a {
+  color: inherit;
+
+  &:hover {
+    color: inherit;
+  }
+}
+
+.raised-btn {
+  filter: drop-shadow(0px 4px 4px rgba(50, 50, 71, 0.08)) drop-shadow(0px 4px 8px rgba(50, 50, 71, 0.06));
+}
+
+.small-btn {
+  height: 2.5rem;
+}
+
+.purple-btn {
+  background: $light-purple;
+  color: $white !important;
+  transition: all 0.4s;
+
+  &:hover,
+  &:focus,
+  &:active {
+    border: 1px solid $light-purple !important;
+    background: $light-purple;
+    color: $white !important;
+  }
+}
+
+.grey-btn {
+  background: $lighter-gray !important;
+  color: $black !important;
+  transition: all 0.4s;
+  border: 1px solid $lighter-gray !important;
+
+  &:hover,
+  &:focus,
+  &:active {
+    border: 1px solid $lighter-gray !important;
+    background: $lighter-gray !important;
+    color: $black !important;
+  }
+}
+
+input {
+  &::placeholder {
+    color: $black;
+    opacity: 1;
+  }
+}
