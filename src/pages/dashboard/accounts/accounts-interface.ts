@@ -14,7 +14,9 @@ export interface accountInterface {
   bankName: string,
   bankCode: string,
   bankType: string,
-  dateLinked: number
+  dateLinked: number,
+  reauthorisationRequired: boolean,
+  reauthorisationToken: string,
 }
 
 export type accountList = accountInterface[]

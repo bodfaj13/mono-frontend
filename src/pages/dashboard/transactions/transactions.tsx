@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react'
-import { message, Table } from 'antd'
+import { message, Table, Tag } from 'antd'
 import { getAccountTransactions } from '../../../api/accounts';
 import { commaNumber } from '../../../utils/helpers';
 import moment from 'moment';
@@ -28,13 +28,21 @@ const Transactions = () => {
 
   const columns = [
     {
-      title: 'AMOUNT (NGN)',
-      dataIndex: 'amount',
-      key: 'amount',
+      title: 'TYPE',
+      dataIndex: 'type',
+      key: 'type',
       render: (text: number, record: any) => {
         return (
           <span>
-            {commaNumber(Number(text / 100).toFixed(2))}
+            {
+              record.type === 'credit' ?
+                <Tag color="geekblue">
+                  Credit
+                </Tag> :
+                <Tag color="red">
+                  Debit
+                </Tag>
+            }
           </span>
         )
       }
@@ -52,11 +60,6 @@ const Transactions = () => {
       }
     },
     {
-      title: 'NARRATION',
-      dataIndex: 'narration',
-      key: 'narration',
-    },
-    {
       title: 'DATE',
       dataIndex: 'date',
       key: 'date',
@@ -67,6 +70,11 @@ const Transactions = () => {
           </span>
         )
       }
+    },
+    {
+      title: 'NARRATION',
+      dataIndex: 'narration',
+      key: 'narration',
     }
   ]
 
@@ -168,7 +176,7 @@ const Transactions = () => {
           }}
           onChange={handlePagination}
           size="small"
-          scroll={{ x: 600 }}
+          scroll={{ x: 1700 }}
         />
       </div>
     </div>

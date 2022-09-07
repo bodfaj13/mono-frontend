@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react'
-import { Button, message, Table } from 'antd'
+import { Button, message, Popconfirm, Table } from 'antd'
 import { PlusOutlined } from '@ant-design/icons';
 import { accountInterface, accountList } from './accounts-interface';
 import { getLinkedAccounts, linkAccount, unLinkBankAccount } from '../../../api/accounts';
@@ -94,25 +94,6 @@ const Accounts = () => {
       }
     },
     {
-      title: 'ACTION',
-      dataIndex: '',
-      key: '',
-      render: (text: any, record: any) => {
-        return (
-          <Button
-            disabled={loading || unlinking}
-            loading={unlinking && currentId === record._id}
-            className={`purple-btn raised-btn smaller-btn ${loading || unlinking ? 'grey-btn' : ''}`}
-            onClick={() => {
-              unLinkAccount(record._id, record.accountId)
-            }}
-          >
-            Unlink
-          </Button>
-        )
-      }
-    },
-    {
       title: 'VIEW',
       dataIndex: '',
       key: '',
@@ -127,6 +108,66 @@ const Accounts = () => {
           >
             View Transactions
           </Button>
+        )
+      }
+    },
+    {
+      title: 'ACTION',
+      dataIndex: '',
+      key: '',
+      render: (text: any, record: any) => {
+        return (
+          <div>
+            {
+              record.reauthorisationRequired &&
+              <Button
+                disabled={loading || unlinking}
+                loading={unlinking && currentId === record._id}
+                className={`green-btn raised-btn smaller-btn reauth-btn ${loading || unlinking ? 'grey-btn' : ''}`}
+                onClick={() => {
+                  if (window !== undefined) {
+                    var connect: any;
+                    var config = {
+                      key: appDetails.REACT_APP_MONO_PUBLIC_KEY,
+                      onSuccess: (response: any) => {
+                        getAccounts()
+                      },
+                      onClose: () => {
+                        // console.log('user closed the widget.')
+                      }
+                    }
+                    connect = new (window as any).Connect(config)
+                    // connect.setup();
+                    connect.reauthorise(record.reauthorisationrToken);
+                    connect.open();
+                  }
+                }}
+              >
+                Reauthorise
+              </Button>
+            }
+            <Popconfirm
+              title="Are you sure you want to unlink this account?"
+              onConfirm={() => {
+                unLinkAccount(record._id, record.accountId)
+              }}
+              okButtonProps={{
+                className: "purple-btn raised-btn smaller-btn"
+              }}
+              cancelButtonProps={{
+                className: "purple-btn raised-btn smaller-btn"
+              }}
+            >
+              <Button
+                disabled={loading || unlinking}
+                loading={unlinking && currentId === record._id}
+                className={`purple-btn raised-btn smaller-btn ${loading || unlinking ? 'grey-btn' : ''}`}
+              >
+                Unlink
+              </Button>
+            </Popconfirm>
+          </div>
+
         )
       }
     }
@@ -257,7 +298,7 @@ const Accounts = () => {
           }}
           onChange={handlePagination}
           size="small"
-          scroll={{ x: 600 }}
+          scroll={{ x: 1000 }}
         />
       </div>
     </div>

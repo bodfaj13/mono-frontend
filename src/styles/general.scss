@@ -15,7 +15,7 @@ a {
 }
 
 .smaller-btn {
-  height: 2rem;
+  height: 2.2rem;
 }
 
 .purple-btn {
@@ -28,6 +28,20 @@ a {
   &:active {
     border: 1px solid $light-purple !important;
     background: $light-purple;
+    color: $white !important;
+  }
+}
+
+.green-btn {
+  background: $green;
+  color: $white !important;
+  transition: all 0.4s;
+
+  &:hover,
+  &:focus,
+  &:active {
+    border: 1px solid $green !important;
+    background: $green;
     color: $white !important;
   }
 }

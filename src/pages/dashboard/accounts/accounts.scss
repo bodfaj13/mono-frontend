@@ -1,6 +1,10 @@
 .accounts-main {
   margin: 1rem 2.5rem;
 
+  .reauth-btn {
+    margin-right: 0.5rem;
+  }
+
   .content-top {
     display: flex;
     justify-content: space-between;
