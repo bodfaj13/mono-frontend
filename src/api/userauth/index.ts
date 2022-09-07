@@ -18,3 +18,8 @@ export const signup = (data: userSignupPayload) => {
 export const signin = (data: userSigninPayload) => {
   return http.post('/users/login', data)
 }
+
+
+export const removeAccount = () => {
+  return http.patch('/users/deleteaccount', {})
+}

@@ -50,18 +50,24 @@ const Dashboardnav = ({ updateSideBar, showSideBar }: navInterface) => {
   return (
     <div className='dashboard-nav'>
       <div className="top-section">
-        <div className={`nav-mobile`}
+        <div
+        className="menu-holder"
           onClick={() => updateSideBar(!showSideBar)}
         >
-          <div className="bar1"></div>
-          <div className="bar2"></div>
-          <div className="bar3"></div>
+          <div
+            className={`nav-mobile ${showSideBar ? 'change' : ''}`}
+          >
+            <div className="bar1"></div>
+            <div className="bar2"></div>
+            <div className="bar3"></div>
+          </div>
         </div>
 
-        <img src="https://app.moipayway.com/logo.png" alt="logo" />
+
+        <img src="/img/logo/logo.svg" alt="mono logo" />
 
         <p className="logo-name">
-          MoiPayWay
+          Mono
         </p>
       </div>
 
@@ -70,7 +76,7 @@ const Dashboardnav = ({ updateSideBar, showSideBar }: navInterface) => {
           overlay={menu}
           trigger={['click']}
           arrow={false}
-          onVisibleChange={(value) => setVisible(value)}
+          onOpenChange={(value) => setVisible(value)}
         >
           <div className="userside-details">
             <div className="user-info">

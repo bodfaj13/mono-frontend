@@ -2,16 +2,22 @@ import React, { useState, useMemo, useCallback, useEffect } from 'react'
 import { Button, message, Table } from 'antd'
 import { PlusOutlined } from '@ant-design/icons';
 import { accountInterface, accountList } from './accounts-interface';
-import { getLinkedAccounts, linkAccount } from '../../../api/accounts';
+import { getLinkedAccounts, linkAccount, unLinkBankAccount } from '../../../api/accounts';
 import appDetails from '../../../appdetails';
-import { openNotificationWithIcon } from '../../../utils/helpers';
+import { commaNumber, openNotificationWithIcon } from '../../../utils/helpers';
+import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 
 const Accounts = () => {
+  const navigate = useNavigate()
+
   const [accounts, setAccounts] = useState<accountList>([])
   const [loading, setLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
   const [total, setTotal] = useState(0)
+  const [unlinking, setUnlinking] = useState(false)
+  const [currentId, setCurrentId] = useState('')
 
   const request = useMemo(() => {
     return {
@@ -21,10 +27,108 @@ const Accounts = () => {
   }, [pageSize, currentPage])
 
 
+  const unLinkAccount = async (currentId: string, accountId: string) => {
+    setUnlinking(true)
+    setCurrentId(currentId)
+
+    try {
+      await unLinkBankAccount(currentId, accountId)
+
+      setUnlinking(false)
+      setCurrentId('')
+
+      openNotificationWithIcon('success', "Unlink Account", "Account has been unliked successfully")
+
+
+      getAccounts()
+    } catch (error) {
+      setUnlinking(false)
+      message.error('Something went wrong')
+    }
+  }
+
+
   const columns = [
     {
       title: 'ACCOUNT NAME',
-      
+      dataIndex: 'accountName',
+      key: 'accountName',
+    },
+    {
+      title: 'BALANCE (NGN)',
+      dataIndex: 'balance',
+      key: 'balance',
+      render: (text: number, record: any) => {
+        return (
+          <span>
+            {commaNumber(Number(text / 100).toFixed(2))}
+          </span>
+        )
+      }
+    },
+    {
+      title: 'ACCOUNT TYPE',
+      dataIndex: 'accountType',
+      key: 'accountType',
+    },
+    {
+      title: 'ACCOUNT NUMBER',
+      dataIndex: 'accountNumber',
+      key: 'accountNumber',
+    },
+    {
+      title: 'BANK NAME',
+      dataIndex: 'bankName',
+      key: 'bankName',
+    },
+    {
+      title: 'DATE LINKED',
+      dataIndex: 'dateLinked',
+      key: 'dateLinked',
+      render: (text: any, record: any) => {
+        return (
+          <span>
+            {moment(text).format('YYYY-MM-DD')}
+          </span>
+        )
+      }
+    },
+    {
+      title: 'ACTION',
+      dataIndex: '',
+      key: '',
+      render: (text: any, record: any) => {
+        return (
+          <Button
+            disabled={loading || unlinking}
+            loading={unlinking && currentId === record._id}
+            className={`purple-btn raised-btn smaller-btn ${loading || unlinking ? 'grey-btn' : ''}`}
+            onClick={() => {
+              unLinkAccount(record._id, record.accountId)
+            }}
+          >
+            Unlink
+          </Button>
+        )
+      }
+    },
+    {
+      title: 'VIEW',
+      dataIndex: '',
+      key: '',
+      render: (text: any, record: any) => {
+        return (
+          <Button
+            disabled={loading || unlinking}
+            className={`purple-btn raised-btn smaller-btn ${loading || unlinking ? 'grey-btn' : ''}`}
+            onClick={() => {
+              navigate(`/dashboard/transactions/${record.accountId}`)
+            }}
+          >
+            View Transactions
+          </Button>
+        )
+      }
     }
   ]
 
@@ -56,9 +160,14 @@ const Accounts = () => {
         setTotal(totalContent)
         setAccounts(content)
 
-      } catch (error) {
+      } catch (error: any) {
         setLoading(false)
-        message.error('Something went wrong')
+        if (error?.response?.data) {
+          const errorMessage = error?.response?.data?.message
+          message.error(errorMessage)
+        } else {
+          message.error("Something went wrong.")
+        }
       }
     },
     [request],
@@ -74,9 +183,14 @@ const Accounts = () => {
 
         getAccounts()
 
-      } catch (error) {
+      } catch (error: any) {
         setLoading(false)
-        message.error('Something went wrong')
+        if (error?.response?.data) {
+          const errorMessage = error?.response?.data?.message
+          message.error(errorMessage)
+        } else {
+          message.error("Something went wrong.")
+        }
       }
     },
     [getAccounts],
@@ -85,7 +199,7 @@ const Accounts = () => {
 
   useEffect(() => {
     getAccounts()
-    
+
   }, [getAccounts])
 
 
@@ -113,11 +227,8 @@ const Accounts = () => {
     }
   }, [linkBankAccount])
 
-
-
-
   return (
-    <div className="accoints-main">
+    <div className="accounts-main">
       <div className="content-top">
         <div className="info">
           <h1>Linked Accounts</h1>
@@ -146,6 +257,7 @@ const Accounts = () => {
           }}
           onChange={handlePagination}
           size="small"
+          scroll={{ x: 600 }}
         />
       </div>
     </div>

@@ -12,5 +12,12 @@
     @include mobile-portrait() {
       margin-left: 0;
     }
+
+
+    .outlet-holder {
+      @include mobile-portrait() {
+        margin-top: 5rem;
+      }
+    }
   }
 }

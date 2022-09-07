@@ -15,6 +15,10 @@
     margin: 11rem auto;
     padding: 3.15rem;
 
+    @include mobile-portrait() {
+      width: 90%;
+    }
+
     .content-top {
       display: flex;
       justify-content: center;

@@ -7,24 +7,17 @@ export const menuList = [
     level: [0]
   },
   {
-    title: 'Accounts',
-    active: false,
-    childId: 'childId-2',
-    route: '/dashboard/accounts',
-    level: [0]
-  },
-  {
-    title: 'Transactions',
-    active: false,
-    childId: 'childId-3',
-    route: '/dashboard/transactions',
-    level: [0]
-  },
-  {
     title: 'Settings',
     active: false,
-    childId: 'childId-4',
+    childId: 'childId-2',
     route: '/dashboard/settings',
+    level: [0]
+  },
+  {
+    title: 'Logout',
+    active: false,
+    childId: 'childId-3',
+    route: '#',
     level: [0]
   }
 ]

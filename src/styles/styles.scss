@@ -1,3 +1,9 @@
+@import "./font/stylesheet.scss";
+
+* {
+  font-family: 'Duplicate Sans' !important;
+}
+
 @import "./colors.scss";
 
 @import "./mixins.scss";
@@ -5,6 +11,7 @@
 @import "./antdesignedits.scss";
 
 @import "./general.scss";
+
 
 @import "../components/theme/outerpage/outerpage.scss";
 @import "../components/theme/textinput/textinput.scss";

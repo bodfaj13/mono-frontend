@@ -1,3 +1,20 @@
-.transactions {
-  
+.transactions-main {
+  margin: 1rem 2.5rem;
+
+  .content-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    .info {
+      h1 {
+        margin-bottom: 0.2rem;
+      }
+
+      span {
+        font-size: 15px;
+      }
+    }
+  }
 }

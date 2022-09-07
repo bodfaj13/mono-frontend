@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Protectedroute from './components/protectedroute/protectedroute';
 import Accounts from './pages/dashboard/accounts/accounts';
 import Dasboard from './pages/dashboard/dashboard';
-import Dashboardmain from './pages/dashboard/dashboardmain/dashboardmain';
+// import Dashboardmain from './pages/dashboard/dashboardmain/dashboardmain';
 import Settings from './pages/dashboard/settings/settings';
 import Transactions from './pages/dashboard/transactions/transactions';
 import Signin from './pages/signin/signin';
@@ -26,11 +26,11 @@ const App = () => {
       <Routes>
         <Route element={<Protectedroute />}>
           <Route path="/dashboard" element={<Dasboard />}>
-            <Route path="/dashboard" element={<Dashboardmain />} />
+            <Route path="/dashboard" element={<Accounts />} />
 
-            <Route path="/dashboard/accounts" element={<Accounts />} />
+            {/* <Route path="/dashboard/accounts" element={<Accounts />} /> */}
 
-            <Route path="/dashboard/transactions" element={<Transactions />} />
+            <Route path="/dashboard/transactions/:accountId" element={<Transactions />} />
 
             <Route path="/dashboard/settings" element={<Settings />} />
           </Route>

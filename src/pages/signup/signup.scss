@@ -4,6 +4,10 @@
     width: 75%;
     margin: 0 auto;
 
+    @include mobile-portrait() {
+      width: 100%;
+    }
+
     .text-extra {
       text-align: center;
       color: $purple-text;

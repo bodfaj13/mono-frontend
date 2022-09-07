@@ -65,9 +65,8 @@ const Signin = () => {
       openNotificationWithIcon('success', 'Log in Successful')
     } catch (error: any) {
       setLoading(false)
-
       if (error?.response?.data) {
-        const errorMessage = error?.response?.message
+        const errorMessage = error?.response?.data?.message
         setError(errorMessage)
       } else {
         message.error("Something went wrong.")

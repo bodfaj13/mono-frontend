@@ -17,3 +17,17 @@ export const linkAccount = (code: string) => {
     code
   })
 }
+
+
+export const unLinkBankAccount = (currentId: string, accountId: string) => {
+  return http.patch(`/accounts/unlink/${currentId}/${accountId}`, {})
+}
+
+
+export const getAccountTransactions = (accountId: string, data?: paginatedData) => {
+  return http.get(`/accounts/transactions/${accountId}`, {
+    params: {
+      ...data
+    }
+  })
+}

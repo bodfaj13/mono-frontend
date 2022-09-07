@@ -5,11 +5,14 @@ import { sidebarInterface } from './sidebar-interface'
 import { useSelector } from 'react-redux';
 import { combineReducersInterface } from '../../../core/reducers/index-interface';
 import { userReducerInterface } from '../../../core/reducers/userreducer/userreducer-interface';
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '../../../core/actions/useractions/useractions';
 
 
 const Sidebar = ({ showSideBar }: sidebarInterface) => {
   const navigate = useNavigate()
   const location = useLocation()
+  const dispatch: any = useDispatch()
 
   const state: any = useSelector<combineReducersInterface>(state => ({
     user: state.userReducer.user
@@ -36,6 +39,10 @@ const Sidebar = ({ showSideBar }: sidebarInterface) => {
                   className={`menuchild ${item.route === location.pathname ? 'active' : ''}`} onClick={() => {
                     if (item.route !== '#') {
                       navigate(item.route)
+                    } else {
+                      dispatch(logoutUser())
+                      
+                      navigate('/')
                     }
                   }}>
                   <span className="menu-value">

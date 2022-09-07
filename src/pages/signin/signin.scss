@@ -1,12 +1,21 @@
 .signin {
   .error-holder {
-    margin-bottom: 0.5rem;
+    width: 75%;
+    margin: 1.5rem auto 0.1rem;
+
+    @include mobile-portrait() {
+      width: 100%;
+    }
   }
   
   .signin-form {
     padding-top: 1.8rem;
     width: 75%;
     margin: 0 auto;
+
+    @include mobile-portrait() {
+      width: 100%;
+    }
 
     .text-extra {
       text-align: center;
